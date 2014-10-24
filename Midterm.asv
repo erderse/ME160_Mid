@@ -4,8 +4,7 @@ clc
 
 order = 0;
 NP = inputdlg({'Name','Phone Number'}, 'Welcome', [1 20;1 9]);%Increase space for phone #, fix cancel button
-%Add something to check if the phone number has enough digits, and will
-%only accept digits.
+%Add something to check if the phone number has enough digits
 COD = menu ('Carry out or Delivery?', 'Carry out', 'Delivery');
 switch COD
     case 1
@@ -17,7 +16,6 @@ switch COD
 end
 SUBTOTAL = 0;
 TAX = 0;
-
 while order==1%Currently not looping when you order an item
     ITEM = menu ('What would you like?','Pizza','Sub','Calzone','Side','Drink','DONE');
     switch ITEM
@@ -133,9 +131,8 @@ while order==1%Currently not looping when you order an item
             disp ('Your total is')
             disp (SUBTOTAL + TAX)
     end
-    order = 0;%This is why it's not looping.  Move to an if(done)
+    order = 0;%This 
 end
-
 AGAIN = menu ('Is this correct?','Yes','No');%Closing out of the window brings you here.  Maybe move this in the while loop
 %Order does not display when here
 switch AGAIN%Reciept does not display
