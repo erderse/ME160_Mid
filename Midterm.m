@@ -2,18 +2,24 @@ clear all
 clc
 
 order = 0;
-NP = inputdlg({'Name','Phone Number'}, 'Welcome', [1 20;1 9]);
-COD = menu ('Carry out or Delivery?', 'Carry out', 'Delivery');
-switch COD
-    case 1
-        COD = 1;
-        order=1;
-    case 2
-        address = inputdlg({'House or Apt Number','Street', 'City'},'What is your address?', [1 10;1 20;1 15]);
-        order = 1;
+NP = [0 0];
+NP = inputdlg({'Name','Phone Number'}, 'Welcome', [1 20;1 14]);
+if NP{1}==0; %Ends the order if the user hits cancel in the NP menu
+    order = 0;
+else 
+    COD = menu ('Carry out or Delivery?', 'Carry out', 'Delivery');
+    switch COD
+        case 1
+            COD = 1;
+            order=1;
+        case 2
+            address = inputdlg({'House or Apt Number','Street', 'City'},'What is your address?', [1 10;1 20;1 15]);
+            order = 1;
+    end
+    SUBTOTAL = 0;
+    TAX = 0;
 end
-SUBTOTAL = 0;
-TAX = 0;
+
 while order==1
     ITEM = menu ('What would you like?','Pizza','Sub','Calzone','Side','Drink','DONE');
     switch ITEM
@@ -80,14 +86,15 @@ while order==1
             end
             order= 1;
         case 4
+        %Cancel button cancels entire order
             SIDETYPE = menu ('What side?','Breadsticks $.99 each','Wings $.99 each','Chips $1.49 each','Cookies $.99 each','DONE');
             switch SIDETYPE
                 case 1
-                    BRDCOUNT = inputdlg ({'How many?'},'Breadsticks', [1 3]);
+                    BRDCOUNT = inputdlg ({'How many?'},'Breadsticks', [1 10]);
                     BRDNUM = str2num (BRDCOUNT{1});
                     SUBTOTAL = SUBTOTAL + (BRDNUM * .99) ;
                 case 2
-                    WINGCOUNT = inputdlg ({'How many?'},'Wings', [1 3]);
+                    WINGCOUNT = inputdlg ({'How many?'},'Wings', [1 10]);
                     WINGSAUCE = menu ('Sauce?','Mild','Hot','Ranch');
                     WINGNUM = str2num (WINGCOUNT{1});
                      SUBTOTAL = SUBTOTAL + (WINGNUM * .99);
@@ -95,7 +102,7 @@ while order==1
                     CHIPTYPE = menu ('What type?','Regular','Cheddar','Salt and Vinegar');
                     SUBTOTAL = SUBTOTAL + 1.49;
                 case 4
-                    COOKCOUNT = inputdlg ({'How many?'},'Cookies', [1 3]);
+                    COOKCOUNT = inputdlg ({'How many?'},'Cookies', [1 10]);
                     COOKNUM = str2num (COOKCOUNT{1});
                     SUBTOTAL = SUBTOTAL + (COOKNUM * .99);
                     COOKTYPE = menu ('What type?','Chocolate Chip','Sugar','M&M');
@@ -134,11 +141,12 @@ end
 
 AGAIN = menu ('Is this correct?','Yes','No');
 switch AGAIN
-        case 1
-            disp ('Thank you, have a great day!')
-        case 2
-            disp ('Please order again')
-            SUBTOTAL = 0;
-            TAX = 0;
-            order = 1;
+%Outputs to command prompt.  Change this to a windowed output.
+    case 1
+        disp ('Thank you, have a great day!')
+    case 2
+        disp ('Please order again')
+        SUBTOTAL = 0;
+        TAX = 0;
+        order = 1;
 end
