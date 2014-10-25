@@ -4,9 +4,9 @@ clc
 order = 0;
 cancel = 0;
 NP = inputdlg({'Name','Phone Number'}, 'Welcome', [1 20;1 14]);
-cancel = isempty(NP); %Checks if the user cancelled in NP
-
-if cancel==1; %Ends the order if the user canceled
+cancel = isempty(NP);
+disp(cancel);
+if cancel==1; %Ends the order if the user hits cancel in the NP menu
     order = 0;
     cancel_all = 0;
 else 
