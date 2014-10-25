@@ -2,11 +2,11 @@ clear all
 clc
 
 correct = 0;
-while correct == 0;
+while correct == 0; %loops until user has entered a valid input
     order = 0;
     NP = inputdlg({'Name','Phone Number'}, 'Welcome', [1 20;1 14]); %Input name and phone number
-    cancel = isempty(NP); %Checks if the user cancelled in NP        
-    if cancel==1; %Ends the order if the user canceled
+    cancel_NP = isempty(NP); %Checks if the user cancelled in NP        
+    if cancel_NP==1; %Ends the order if the user canceled
         order = 0;
         cancel_all = 0;
         correct = 1;
@@ -14,7 +14,6 @@ while correct == 0;
         l = length(NP{2});
         if l == 10;
             correct = 1;
-            order = 1;
         else
             disp('Enter a phone number 10 digits long.');
         end
@@ -22,18 +21,25 @@ while correct == 0;
     end
 end
 
-if order == 1;
-    COD = menu ('Carry out or Delivery?', 'Carry out', 'Delivery');
-    switch COD
-        case 1
-            COD = 1;
-            order=1;
-        case 2
-            address = inputdlg({'House or Apt Number','Street', 'City'},'What is your address?', [1 10;1 20;1 15]);
-            order = 1;
+if cancel_all == 1;
+    while order == 0 %loops until user has entered a valid input
+        COD = menu ('Carry out or Delivery?', 'Carry out', 'Delivery');
+        switch COD
+            case 1
+                COD = 1;
+                order=1;
+            case 2
+                address = inputdlg({'House or Apt Number','Street', 'City'},'What is your address?', [1 10;1 20;1 15]);
+                cancel_COD = isempty(address); %Checks if user canceled address input
+                if cancel_COD == 1; %if user canceled, repeat COD
+                    order = 0;
+                else
+                    order = 1;
+                end
+        end
+        SUBTOTAL = 0;
+        TAX = 0;
     end
-    SUBTOTAL = 0;
-    TAX = 0;
 end
 
 while order==1
