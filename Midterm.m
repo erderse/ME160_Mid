@@ -1,15 +1,28 @@
 clear all
 clc
 
-order = 0;
-cancel = 0;
-NP = inputdlg({'Name','Phone Number'}, 'Welcome', [1 20;1 14]);
-cancel = isempty(NP); %Checks if the user cancelled in NP
-
-if cancel==1; %Ends the order if the user canceled
+correct = 0;
+while correct == 0;
     order = 0;
-    cancel_all = 0;
-else 
+    NP = inputdlg({'Name','Phone Number'}, 'Welcome', [1 20;1 14]); %Input name and phone number
+    cancel = isempty(NP); %Checks if the user cancelled in NP        
+    if cancel==1; %Ends the order if the user canceled
+        order = 0;
+        cancel_all = 0;
+        correct = 1;
+    else %checks string length
+        l = length(NP{2});
+        if l == 10;
+            correct = 1;
+            order = 1;
+        else
+            disp('Enter a phone number 10 digits long.');
+        end
+        cancel_all = 1;
+    end
+end
+
+if order == 1;
     COD = menu ('Carry out or Delivery?', 'Carry out', 'Delivery');
     switch COD
         case 1
